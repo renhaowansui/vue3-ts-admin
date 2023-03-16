@@ -4,15 +4,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import { defineComponent } from 'vue'
+import HelloWorld from './components/HelloWorld.vue'
+import request from '@/service'
 
 export default defineComponent({
-  name: "App",
+  name: 'App',
   components: {
-    HelloWorld,
+    HelloWorld
   },
-});
+  mounted() {
+    request
+      .get({
+        url: '/home/multidata',
+        interceptors: {
+          requestInterceptor(config: any) {
+            console.log('单个请求拦截成功', config)
+            return config
+          },
+          responseInterceptor(err: any) {
+            console.log('单个请求响应拦截成功', err)
+            return err
+          }
+        }
+      })
+      .then((res: any) => {
+        console.log('res', res)
+      })
+      .catch((err: any) => {
+        console.log('err', err)
+      })
+  }
+})
 </script>
 
 <style lang="less">
