@@ -1,33 +1,38 @@
 import axios from 'axios'
 import { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import { RhRequestConfig, RhRequestInterceptors } from './type'
-
+import { ElLoading, ElMessage } from 'element-plus'
 class RhRequest {
   instance: AxiosInstance
   interceptors?: RhRequestInterceptors
-
+  isLoading: any
   constructor(config: RhRequestConfig) {
     this.instance = axios.create(config)
     this.interceptors = config.interceptors
-
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('axios请求拦截器成功', config)
+        this.isLoading = ElLoading.service({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
         return config
       },
       (error) => {
-        console.log('axios请求拦截器失败', error)
         return error
       }
     )
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('axios响应拦截器成功', res)
         const data = res.data
+        this.isLoading?.close()
         return data
       },
       (error) => {
-        console.log('axios响应拦截器失败', error)
+        if (error.response?.data) {
+          ElMessage.error(error.response.data)
+        }
+        this.isLoading?.close()
         return Promise.reject(error)
       }
     )
@@ -64,6 +69,9 @@ class RhRequest {
   }
   get<T = any>(config: RhRequestConfig<T>): Promise<T> {
     return this.request({ ...config, method: 'GET' })
+  }
+  post<T = any>(config: RhRequestConfig<T>): Promise<T> {
+    return this.request({ ...config, method: 'POST' })
   }
 }
 
