@@ -1,5 +1,4 @@
 import { createPinia } from 'pinia'
 
-const Pinia = createPinia()
-
-export default Pinia
+export const Pinia = createPinia()
+export { useUserStore } from './user'

@@ -9,12 +9,14 @@ import {
   ElMain,
   ElAside,
   ElMenu,
+  ElSubMenu,
   ElMenuItem,
   ElCheckbox,
   ElLink,
   ElForm,
   ElFormItem,
-  ElInput
+  ElInput,
+  ElIcon
 } from 'element-plus'
 
 const components = [
@@ -27,12 +29,14 @@ const components = [
   ElMain,
   ElAside,
   ElMenu,
+  ElSubMenu,
   ElMenuItem,
   ElCheckbox,
   ElLink,
   ElForm,
   ElFormItem,
-  ElInput
+  ElInput,
+  ElIcon
 ]
 
 const registerComponent = {

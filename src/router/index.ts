@@ -1,19 +1,17 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import LocalCache from '@/utils/cache'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { useUserStore } from '@/store/index'
+// 获取路由组件的方法
+// const _import = require('@/router/_import_' + process.env.NODE_ENV)
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
-    path: '/',
-    redirect: '/home'
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: () => import('@/view/home/index.vue')
+    path: '/main',
+    name: 'main',
+    component: () => import('@/view/main/index.vue')
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: () => import('@/view/login/index.vue')
   },
   {
@@ -28,13 +26,43 @@ const router = createRouter({
   history: createWebHashHistory()
 })
 
+let hasAsyncRoutes = false
+
 router.beforeEach((to) => {
+  console.log('to', to)
   if (to.path !== '/login') {
-    const token = LocalCache.getData('token')
+    const userStore = useUserStore()
+    const token = userStore.$state.token
+    const menu = userStore.$state.menuInfo
     if (!token) {
       return '/login'
     }
+    console.log('hasAsyncRoutes', hasAsyncRoutes)
+    if (!hasAsyncRoutes) {
+      console.log('menu', JSON.parse(JSON.stringify(menu)))
+      addAsyncRouter(menu)
+    }
+    return true
   }
 })
+function addAsyncRouter(menuList: any[]) {
+  menuList = JSON.parse(JSON.stringify(menuList))
+  for (const item of menuList) {
+    if (item.type === 2) {
+      // const compoentFile = importAll(require.context('@/view', true, /\.vue$/))
+      // console.log('compoentFile', compoentFile)
+      // console.log('cache', cache)
+      router.addRoute('main', {
+        path: item.url,
+        name: item.name,
+        component: () => require(`@/view${item.url}.vue`).default
+      })
+    } else {
+      addAsyncRouter(item.children)
+    }
+  }
+  hasAsyncRoutes = true
+  console.log('router', router.getRoutes(), router)
+}
 
 export default router

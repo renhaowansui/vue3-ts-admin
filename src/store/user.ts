@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { accountLogin, getUserInfo, getRoleMenu } from '@/api/user'
 import router from '@/router'
 import LocalCache from '@/utils/cache'
-
 export const useUserStore = defineStore('user', {
   state: () => ({
     token: LocalCache.getData('token') || '',
