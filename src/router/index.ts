@@ -1,23 +1,22 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import { useUserStore } from '@/store/index'
+import { useLoginStore } from '@/store/index'
 // 获取路由组件的方法
 // const _import = require('@/router/_import_' + process.env.NODE_ENV)
 
 const routes: RouteRecordRaw[] = [
   {
+    path: '/',
+    redirect: '/main'
+  },
+  {
     path: '/main',
     name: 'main',
-    component: () => import('@/view/main/index.vue')
+    component: () => import('@/views/main/index.vue')
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/view/login/index.vue')
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    name: '404',
-    component: () => import('@/view/404/index.vue')
+    component: () => import('@/views/login/index.vue')
   }
 ]
 
@@ -27,35 +26,44 @@ const router = createRouter({
 })
 
 let hasAsyncRoutes = false
+let mainRedirectPath = ''
 
 router.beforeEach((to) => {
   console.log('to', to)
+  const userStore = useLoginStore()
+  const token = userStore.$state.token
+  const menu = userStore.$state.menuInfo
   if (to.path !== '/login') {
-    const userStore = useUserStore()
-    const token = userStore.$state.token
-    const menu = userStore.$state.menuInfo
     if (!token) {
       return '/login'
     }
-    console.log('hasAsyncRoutes', hasAsyncRoutes)
     if (!hasAsyncRoutes) {
-      console.log('menu', JSON.parse(JSON.stringify(menu)))
       addAsyncRouter(menu)
+      router.addRoute({
+        path: '/:pathMatch(.*)*',
+        name: '404',
+        component: () => import('@/views/404/index.vue')
+      })
+      if (to.path === '/main') {
+        return mainRedirectPath
+      } else {
+        router.replace(to)
+      }
     }
-    return true
   }
 })
 function addAsyncRouter(menuList: any[]) {
   menuList = JSON.parse(JSON.stringify(menuList))
   for (const item of menuList) {
     if (item.type === 2) {
-      // const compoentFile = importAll(require.context('@/view', true, /\.vue$/))
+      // const compoentFile = importAll(require.context('@/views', true, /\.vue$/))
       // console.log('compoentFile', compoentFile)
       // console.log('cache', cache)
+      if (!mainRedirectPath) mainRedirectPath = item.url
       router.addRoute('main', {
         path: item.url,
         name: item.name,
-        component: () => require(`@/view${item.url}.vue`).default
+        component: () => require(`@/views${item.url}/index.vue`).default
       })
     } else {
       addAsyncRouter(item.children)

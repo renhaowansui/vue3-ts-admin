@@ -1,6 +1,8 @@
 import { BASE_URL, TIME_OUT } from './request/config'
 import RhRequest from './request/index'
+import { useRouter } from 'vue-router'
 import LocalCache from '@/utils/cache'
+import { ElMessage } from 'element-plus'
 
 console.log(BASE_URL, TIME_OUT)
 const requestInstance = new RhRequest({
@@ -24,7 +26,13 @@ const requestInstance = new RhRequest({
       return config
     },
     responseInterceptorCatch: (error) => {
-      // console.log('request实例响应拦截器失败', error)
+      console.log('request实例响应拦截器失败', error)
+      if (error.response.status === 401) {
+        // LocalCache.clearCache()
+        const router = useRouter()
+        router.replace('/login')
+        ElMessage.warning('请重新登录！')
+      }
       return Promise.reject(error)
     }
   }

@@ -7,7 +7,9 @@
           <Fold v-else />
         </el-icon>
       </div>
-      <div class="">面包寫</div>
+      <div>
+        <breadcrumb />
+      </div>
     </div>
     <div class="right">right</div>
   </div>
@@ -17,12 +19,14 @@
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { Expand, Fold } from '@element-plus/icons-vue'
+import Breadcrumb from '@/components/breadcrumb/index.vue'
 
 export default defineComponent({
   emits: ['collapseAsideMenu'],
   components: {
     Expand,
-    Fold
+    Fold,
+    Breadcrumb
   },
   setup(props, { emit }) {
     const route = useRoute()
@@ -43,6 +47,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .nav-header {
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   .left {

@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import { accountLogin, getUserInfo, getRoleMenu } from '@/api/user'
+import { accountLogin, getUserInfo, getRoleMenu } from '@/service/login'
 import router from '@/router'
 import LocalCache from '@/utils/cache'
-export const useUserStore = defineStore('user', {
+export const useLoginStore = defineStore('login', {
   state: () => ({
     token: LocalCache.getData('token') || '',
     userInfo: LocalCache.getData('userInfo') || {},
@@ -25,7 +25,7 @@ export const useUserStore = defineStore('user', {
       this.$state.menuInfo = menuInfo
       LocalCache.setData('menuInfo', menuInfo)
 
-      router.push('/home')
+      router.push('/main')
     }
   }
 })

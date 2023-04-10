@@ -52,6 +52,8 @@ export default defineComponent({
   .page-info {
     background-color: #fff;
     border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
   }
 }
 
@@ -77,7 +79,6 @@ export default defineComponent({
 }
 .el-main {
   color: #333;
-  text-align: center;
   background-color: #f0f2f5;
 }
 </style>

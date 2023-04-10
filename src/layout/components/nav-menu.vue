@@ -2,10 +2,11 @@
   <div class="nav-menu">
     <div class="title">
       <img class="img" src="@/assets/img/logo.svg" alt="logo" />
-      <span v-if="!isCollapse">后台管理系统</span>
+      <span v-if="!isCollapse" class="title">Vue3+TS</span>
     </div>
     <el-menu
       class="el-menu-vertical"
+      :default-active="defaultActive"
       background-color="#001529"
       text-color="#b7bdc3"
       active-text-color="#FFF"
@@ -36,10 +37,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/store'
+import { computed, defineComponent, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useLoginStore } from '@/store'
 import { Document } from '@element-plus/icons-vue'
+import { mapPathToMenu } from '@/utils/menus'
 export default defineComponent({
   props: {
     isCollapse: {
@@ -52,18 +54,20 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
-    const userStore = useUserStore()
+    const route = useRoute()
+    const userStore = useLoginStore()
     const menuList = computed(() => userStore.$state.menuInfo)
-    console.log('menuList', menuList)
+    const menu = mapPathToMenu(route.path, menuList.value)
+    const defaultActive = ref(menu.id + '')
 
     const handleMenuItemClick = (item: any) => {
-      console.log('handleMenuItemClick', item)
       router.push({
         path: item.url ?? '/404'
       })
     }
     return {
       menuList,
+      defaultActive,
       handleMenuItemClick
     }
   }
@@ -75,19 +79,19 @@ export default defineComponent({
   height: 100%;
   width: 100%;
   .title {
-    height: 50px;
     display: flex;
+    height: 28px;
+    padding: 12px 10px 8px 10px;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 10px;
 
     .img {
-      height: 50%;
+      height: 100%;
       margin: 0 10px;
     }
 
-    span {
+    .title {
       font-size: 16px;
       font-weight: 700;
       color: white;

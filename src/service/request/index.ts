@@ -73,6 +73,12 @@ class RhRequest {
   post<T = any>(config: RhRequestConfig<T>): Promise<T> {
     return this.request({ ...config, method: 'POST' })
   }
+  patch<T = any>(config: RhRequestConfig<T>): Promise<T> {
+    return this.request({ ...config, method: 'PATCH' })
+  }
+  delete<T = any>(config: RhRequestConfig<T>): Promise<T> {
+    return this.request({ ...config, method: 'DELETE' })
+  }
 }
 
 export default RhRequest

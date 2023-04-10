@@ -6,10 +6,10 @@
     class="demo-ruleForm"
     status-icon
   >
-    <el-form-item label="手机号" prop="username">
+    <el-form-item label="账号" prop="username">
       <el-input v-model="ruleForm.username" />
     </el-form-item>
-    <el-form-item label="验证码" prop="password">
+    <el-form-item label="密码" prop="password">
       <el-input v-model="ruleForm.password" />
     </el-form-item>
   </el-form>
@@ -17,11 +17,11 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
-import { useUserStore } from '@/store/user'
+import { useLoginStore } from '@/store'
 
 export default defineComponent({
   setup() {
-    const userStore = useUserStore()
+    const userStore = useLoginStore()
     let ruleFormRef = ref()
     let ruleForm = reactive({
       username: '',
@@ -60,7 +60,11 @@ export default defineComponent({
       ruleFormRef.value.validate((valid: any, fields: any) => {
         if (valid) {
           console.log('submit!', ruleForm)
-          userStore.accountLogin(ruleForm)
+          let parmas = {
+            name: ruleForm.username,
+            password: ruleForm.password
+          }
+          userStore.accountLogin(parmas)
         } else {
           console.log('error submit!', fields)
         }

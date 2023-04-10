@@ -15,8 +15,19 @@ import {
   ElLink,
   ElForm,
   ElFormItem,
+  ElTable,
+  ElTableColumn,
+  ElPagination,
   ElInput,
-  ElIcon
+  ElIcon,
+  ElSelect,
+  ElOption,
+  ElTimePicker,
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElRow,
+  ElCol
 } from 'element-plus'
 
 const components = [
@@ -35,8 +46,19 @@ const components = [
   ElLink,
   ElForm,
   ElFormItem,
+  ElTable,
+  ElTableColumn,
+  ElPagination,
   ElInput,
-  ElIcon
+  ElIcon,
+  ElSelect,
+  ElOption,
+  ElTimePicker,
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElRow,
+  ElCol
 ]
 
 const registerComponent = {

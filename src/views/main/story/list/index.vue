@@ -1,5 +1,5 @@
 <template>
-  <div>role</div>
+  <div>list</div>
 </template>
 
 <script lang="ts">
