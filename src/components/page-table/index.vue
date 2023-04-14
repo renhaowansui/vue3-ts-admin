@@ -3,12 +3,20 @@
     <div class="header">
       <slot name="header"></slot>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table :data="tableData" row-key="id" border>
       <el-table-column
+        v-if="showIndexColumn"
+        class-name="index-column"
         type="index"
         label="序号"
         width="56"
         align="center"
+      ></el-table-column>
+      <el-table-column
+        v-if="showSelectColumn"
+        type="selection"
+        align="center"
+        width="60"
       ></el-table-column>
       <el-table-column
         v-for="column in tableColumnConfig"
@@ -18,7 +26,7 @@
         :width="column.width"
         :formatter="column.formatter"
       >
-        <template #default="scope: { row: any }">
+        <template #default="scope">
           <slot :name="column.prop" :row="scope.row"
             ><span>{{
               column.formatter
@@ -45,6 +53,14 @@ export default defineComponent({
       type: Array,
       required: true
     },
+    showIndexColumn: {
+      type: Boolean,
+      default: true
+    },
+    showSelectColumn: {
+      type: Boolean,
+      default: false
+    },
     tableColumnConfig: {
       type: Array as PropType<ITableColumn[]>,
       required: true
@@ -60,6 +76,13 @@ export default defineComponent({
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
+  }
+  ::v-deep(.el-table) {
+    .index-column {
+      .el-table__placeholder {
+        display: none !important;
+      }
+    }
   }
 }
 </style>

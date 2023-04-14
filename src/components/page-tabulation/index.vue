@@ -6,7 +6,11 @@
       @submit="handleSearch"
     >
     </page-search>
-    <page-table :tableData="tableData" :tableColumnConfig="tableColumnConfig">
+    <page-table
+      :tableData="tableData"
+      :tableColumnConfig="tableColumnConfig"
+      v-bind="tableConfig"
+    >
       <template #header>
         <el-button type="primary" size="mini" @click="handleAdd"
           >新增</el-button
@@ -15,7 +19,7 @@
       <template #[tableColumnSlotKey]="scope">
         <slot :name="tableColumnSlotKey" :row="scope.row"></slot>
       </template>
-      <template #handler="scope: { row: any }">
+      <template #handler="scope">
         <div class="handle-btns">
           <el-button size="mini" type="text" @click="handleEdit(scope.row)">
             编辑
@@ -38,13 +42,17 @@
       v-bind="dialogOption"
       @close="dialogClose"
       @confirm="dialogConfirm"
-    ></page-dialog>
+    >
+      <template #default>
+        <slot name="dialog"></slot>
+      </template>
+    </page-dialog>
   </div>
 </template>
 
 <script lang="ts" setup>
 import rhRequest from '@/service/index'
-import { ref, defineProps, PropType } from 'vue'
+import { ref, defineProps, defineEmits, PropType } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import PageSearch from '@/components/page-search/index.vue'
 import PageTable from '@/components/page-table/index.vue'
@@ -66,8 +74,12 @@ const props = defineProps({
     type: Array as PropType<IFormQueryItem[]>,
     default: () => []
   },
+  tableConfig: {
+    type: Object,
+    default: () => ({})
+  },
   tableColumnConfig: {
-    type: Array,
+    type: Array as PropType<ITableColumn[]>,
     default: () => []
   },
   tableColumnSlotKey: {
@@ -78,8 +90,13 @@ const props = defineProps({
   },
   tableFooterSlotKey: {
     type: String
+  },
+  otherInfo: {
+    type: Object,
+    default: () => ({})
   }
 })
+const emits = defineEmits(['edit', 'add'])
 
 let formData = ref({
   offset: 0,
@@ -123,6 +140,7 @@ const handleAdd = () => {
     title: '新增',
     data: {}
   }
+  emits('add')
 }
 const handleEdit = (row: any) => {
   let dialogFormData: any = {
@@ -131,13 +149,13 @@ const handleEdit = (row: any) => {
   props.dialogQueryConfig.forEach((item: IFormQueryItem) => {
     dialogFormData[item.prop] = row[item.prop]
   })
-  console.log('dialogFormData', dialogFormData)
   dialogOption.value = {
     visible: true,
     type: 'edit',
     title: '编辑',
     data: dialogFormData
   }
+  emits('edit', row)
 }
 const handleDelete = (row: any) => {
   ElMessageBox.confirm('是否确认删除该记录？', '提示', {
@@ -155,16 +173,17 @@ const handleDelete = (row: any) => {
   })
 }
 const dialogConfirm = (params: any) => {
+  console.log('props.otherInfo', props.otherInfo)
   if (dialogOption.value.type === 'add') {
-    add(params)
+    add({ ...params, ...props.otherInfo })
   } else {
-    edit(params)
+    edit({ ...params, ...props.otherInfo })
   }
 }
 const add = async (params: any) => {
   const { code } = await rhRequest.post({
     url: `/${props.module}`,
-    data: params.value
+    data: params
   })
   if (code === 0) {
     ElMessage.success('创建成功')
@@ -175,8 +194,8 @@ const add = async (params: any) => {
 const edit = async (params: any) => {
   console.log('params', params)
   const { code } = await rhRequest.patch({
-    url: `/${props.module}/${params.value.id}`,
-    data: params.value
+    url: `/${props.module}/${params.id}`,
+    data: params
   })
   if (code === 0) {
     ElMessage.success('编辑成功')

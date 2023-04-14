@@ -14,6 +14,7 @@
       :colWidthNumber="24"
       :isShowButtonGroup="false"
     ></page-search>
+    <slot></slot>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="handleClose">取消</el-button>
@@ -24,7 +25,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, computed, watch } from 'vue'
+import { defineProps, defineEmits, ref, computed } from 'vue'
 import PageSearch from '@/components/page-search/index.vue'
 
 const props = defineProps({
@@ -56,19 +57,16 @@ let formData = ref({})
 const show = computed(() => {
   return props.modelValue
 })
-watch(
-  props.data,
-  (newVal) => {
-    formData.value = newVal
-  },
-  {
-    deep: true
-  }
-)
 const handleOpen = () => {
   // 初始化编辑数据
-  console.log('props.data', formData.value, props.data)
-  Object.assign(formData.value, props.data)
+  if (props.data && Object.keys(props.data).length > 0) {
+    Object.assign(formData.value, props.data)
+    console.log('123', formData.value)
+  } else {
+    for (let key in formData.value) {
+      delete formData.value[key]
+    }
+  }
 }
 const handleClose = () => {
   pageSearchRef.value.resetFields()
@@ -78,7 +76,7 @@ const handleClose = () => {
 const handleConfirm = async () => {
   let isValid = await pageSearchRef.value.searchSubmit()
   if (isValid) {
-    emits('confirm', formData)
+    emits('confirm', formData.value)
   }
 }
 </script>

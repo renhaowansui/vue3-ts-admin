@@ -25,6 +25,7 @@
               v-model="formData[item.prop]"
               :placeholder="item.placeholder"
               v-bind="item.otherOption"
+              :clearable="true"
             />
             <el-select
               v-else-if="item.type === 'select'"
@@ -46,7 +47,10 @@
             />
           </el-form-item>
         </el-col>
-        <el-col :span="colWidthNumber" v-if="isShowButtonGroup">
+        <el-col
+          :span="colWidthNumber"
+          v-if="isShowButtonGroup && formQueryList.length > 0"
+        >
           <el-button type="primary" @click="searchSubmit">查询</el-button>
         </el-col>
       </el-row>
@@ -87,10 +91,17 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const pageFormRef = ref<FormInstance>()
-    let formData = ref({})
-    watch(props.modelValue, (newVal) => {
-      formData.value = newVal
-    })
+    let formData: any = ref({})
+    watch(
+      props.modelValue,
+      (newVal) => {
+        console.log('props.modelValue', props.modelValue, newVal)
+        formData.value = newVal
+      },
+      {
+        deep: true
+      }
+    )
     watch(
       formData,
       (newVal) => {
