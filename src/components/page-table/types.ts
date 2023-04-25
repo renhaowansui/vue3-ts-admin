@@ -1,4 +1,3 @@
-import { FormItemRule } from 'element-plus'
 export interface ITableColumn {
   prop: string
   label: string

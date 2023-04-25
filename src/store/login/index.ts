@@ -26,6 +26,13 @@ export const useLoginStore = defineStore('login', {
       LocalCache.setData('menuInfo', menuInfo)
 
       router.push('/main')
+    },
+    resetState() {
+      this.$state.token = ''
+      this.$state.menuInfo = {}
+      this.$state.menuInfo = []
+      LocalCache.clearCache()
+      router.replace('/login')
     }
   }
 })

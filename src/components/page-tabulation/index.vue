@@ -12,7 +12,11 @@
       v-bind="tableConfig"
     >
       <template #header>
-        <el-button type="primary" size="mini" @click="handleAdd"
+        <el-button
+          v-if="addBtnShow"
+          type="primary"
+          size="mini"
+          @click="handleAdd"
           >新增</el-button
         >
       </template>
@@ -84,6 +88,10 @@ const props = defineProps({
   },
   tableColumnSlotKey: {
     type: String
+  },
+  addBtnShow: {
+    type: Boolean,
+    default: true
   },
   tableHeaderSlotKey: {
     type: String

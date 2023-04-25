@@ -51,7 +51,12 @@
           :span="colWidthNumber"
           v-if="isShowButtonGroup && formQueryList.length > 0"
         >
-          <el-button type="primary" @click="searchSubmit">查询</el-button>
+          <el-button
+            type="primary"
+            @click="searchSubmit"
+            style="margin-left: 20px"
+            >查询</el-button
+          >
         </el-col>
       </el-row>
     </el-form>
@@ -105,6 +110,7 @@ export default defineComponent({
     watch(
       formData,
       (newVal) => {
+        console.log('formData', newVal)
         emit('update:modelValue', newVal)
       },
       {

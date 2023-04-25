@@ -25,6 +25,8 @@
         :label="column.label"
         :width="column.width"
         :formatter="column.formatter"
+        :fixed="column.fixed"
+        show-overflow-tooltip
       >
         <template #default="scope">
           <slot :name="column.prop" :row="scope.row"
