@@ -1,13 +1,13 @@
-import rhRequest from '@/service/index'
+import RhRequest from '@/service/index'
 
 export function getStoryList() {
-  return rhRequest.get({
+  return RhRequest.get({
     url: '/story/list'
   })
 }
 
 export function addStory(params: any) {
-  return rhRequest.post({
+  return RhRequest.post({
     url: '/story',
     data: params
   })

@@ -1,7 +1,7 @@
-import rhRequest from '@/service/index'
+import RhRequest from '@/service/index'
 
 export function getRoleList(params: any) {
-  return rhRequest.post({
+  return RhRequest.post({
     url: '/role/list',
     data: params
   })

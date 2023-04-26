@@ -28,7 +28,10 @@ import {
   ElBreadcrumbItem,
   ElRow,
   ElCol,
-  ElTree
+  ElTree,
+  ElDropdown,
+  ElDropdownItem,
+  ElCard
 } from 'element-plus'
 
 const components = [
@@ -60,7 +63,10 @@ const components = [
   ElBreadcrumbItem,
   ElRow,
   ElCol,
-  ElTree
+  ElTree,
+  ElDropdown,
+  ElDropdownItem,
+  ElCard
 ]
 
 const registerComponent = {

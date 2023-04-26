@@ -57,8 +57,8 @@ export default defineComponent({
     const route = useRoute()
     const userStore = useLoginStore()
     const menuList = computed(() => userStore.$state.menuInfo)
-    const menu = mapPathToMenu(route.path, menuList.value)
-    const defaultActive = ref(menu.id + '')
+    const menu = computed(() => mapPathToMenu(route.path, menuList.value))
+    const defaultActive = ref(menu.value + '')
 
     const handleMenuItemClick = (item: any) => {
       router.push({

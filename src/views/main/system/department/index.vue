@@ -1,5 +1,5 @@
 <template>
-  <div class="page-user">
+  <div class="page-department">
     <page-tabulation
       module="department"
       :formQueryConfig="formQueryConfig"

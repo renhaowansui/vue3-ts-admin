@@ -1,7 +1,7 @@
-import rhRequest from '@/service/index'
+import RhRequest from '@/service/index'
 
 export function getDepartmentList(params: any) {
-  return rhRequest.post({
+  return RhRequest.post({
     url: '/department/list',
     data: params
   })
