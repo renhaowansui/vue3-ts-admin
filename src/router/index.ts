@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { useLoginStore } from '@/store/index'
 // 获取路由组件的方法
-// const _import = require('@/router/_import_' + process.env.NODE_ENV)
+const _import = require('@/router/_import_' + process.env.NODE_ENV)
 
 const routes: RouteRecordRaw[] = [
   {
@@ -63,7 +63,7 @@ function addAsyncRouter(menuList: any[]) {
       router.addRoute('main', {
         path: item.url,
         name: item.name,
-        component: () => require(`@/views${item.url}/index.vue`).default
+        component: _import(item.url)
       })
     } else {
       addAsyncRouter(item.children)
