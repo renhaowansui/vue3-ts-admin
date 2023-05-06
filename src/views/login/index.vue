@@ -1,4 +1,24 @@
 <template>
+  <div>
+    <div>设置class标识获取dom元素进行样式修改</div>
+    <n-grid x-gap="12" :cols="3">
+      <n-gi>
+        <div class="gray">1</div>
+      </n-gi>
+      <n-gi>
+        <div class="gray">2</div>
+      </n-gi>
+      <n-gi>
+        <div class="gray">3</div>
+      </n-gi>
+      <n-gi>
+        <div class="gray">4</div>
+      </n-gi>
+      <n-gi>
+        <div class="gray">5</div>
+      </n-gi>
+    </n-grid>
+  </div>
   <div class="login">
     <div class="login-pane">
       <h1>后台管理系统</h1>
@@ -37,11 +57,15 @@
 import { defineComponent, ref } from 'vue'
 import AccountPane from './components/account-pane.vue'
 import PhonePane from './components/phone-pane.vue'
+import NGrid from '@/components/nGrid/index.vue'
+import NGi from '@/components/nGi/index.vue'
 
 export default defineComponent({
   components: {
     AccountPane,
-    PhonePane
+    PhonePane,
+    NGrid,
+    NGi
   },
   setup() {
     let tabActive = ref('account')
@@ -92,5 +116,9 @@ export default defineComponent({
       height: 40px;
     }
   }
+}
+.gray {
+  height: 200px !important;
+  background: gray !important;
 }
 </style>

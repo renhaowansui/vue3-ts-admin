@@ -126,7 +126,7 @@ const getList = async () => {
     data: formData.value
   })
   tableData.value = data.list || []
-  tableTotalCount = data.totalCount || 0
+  tableTotalCount.value = data.totalCount || 0
 }
 const handleSearch = () => {
   formData.value.offset = 0
