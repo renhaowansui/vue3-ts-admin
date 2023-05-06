@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>设置class标识获取dom元素进行样式修改</div>
     <n-grid x-gap="12" :cols="3">
       <n-gi>
         <div class="gray">1</div>
