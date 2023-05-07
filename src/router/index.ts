@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { useLoginStore } from '@/store/index'
-// 获取路由组件的方法
-const _import = require('@/router/_import_' + process.env.NODE_ENV)
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
