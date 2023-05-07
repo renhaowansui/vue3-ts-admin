@@ -31,7 +31,12 @@ import {
   ElTree,
   ElDropdown,
   ElDropdownItem,
-  ElCard
+  ElCard,
+  ElDescriptions,
+  ElDescriptionsItem,
+  ElMenuItemGroup,
+  ElDropdownMenu,
+  ElTag
 } from 'element-plus'
 
 const components = [
@@ -44,6 +49,7 @@ const components = [
   ElMain,
   ElAside,
   ElMenu,
+  ElMenuItemGroup,
   ElSubMenu,
   ElMenuItem,
   ElCheckbox,
@@ -64,9 +70,13 @@ const components = [
   ElRow,
   ElCol,
   ElTree,
+  ElDropdownMenu,
   ElDropdown,
   ElDropdownItem,
-  ElCard
+  ElCard,
+  ElDescriptions,
+  ElDescriptionsItem,
+  ElTag
 ]
 
 const registerComponent = {

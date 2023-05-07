@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { useLoginStore } from '@/store/index'
 // 获取路由组件的方法
 const _import = require('@/router/_import_' + process.env.NODE_ENV)
-console.log('_import', _import)
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -56,11 +55,8 @@ function addAsyncRouter(menuList: any[]) {
   menuList = JSON.parse(JSON.stringify(menuList))
   for (const item of menuList) {
     if (item.type === 2) {
-      // const compoentFile = importAll(require.context('@/views', true, /\.vue$/))
-      // console.log('compoentFile', compoentFile)
-      // console.log('cache', cache)
       if (!mainRedirectPath) mainRedirectPath = item.url
-      console.log('_import(item.url)', _import(item.url))
+      console.log('require()', require('@/views' + item.url + '/index.vue'))
       router.addRoute('main', {
         path: item.url,
         name: item.name,

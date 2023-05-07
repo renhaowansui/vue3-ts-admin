@@ -12,11 +12,7 @@
       v-bind="tableConfig"
     >
       <template #header>
-        <el-button
-          v-if="addBtnShow"
-          type="primary"
-          size="mini"
-          @click="handleAdd"
+        <el-button v-if="addBtnShow" type="primary" @click="handleAdd"
           >新增</el-button
         >
       </template>
@@ -25,10 +21,14 @@
       </template>
       <template #handler="scope">
         <div class="handle-btns">
-          <el-button size="mini" type="text" @click="handleEdit(scope.row)">
+          <el-button type="primary" size="small" @click="handleEdit(scope.row)">
             编辑
           </el-button>
-          <el-button size="mini" type="text" @click="handleDelete(scope.row)">
+          <el-button
+            type="warning"
+            size="small"
+            @click="handleDelete(scope.row)"
+          >
             刪除
           </el-button>
         </div>
