@@ -57,10 +57,14 @@ function addAsyncRouter(menuList: any[]) {
     if (item.type === 2) {
       if (!mainRedirectPath) mainRedirectPath = item.url
       console.log('require()', require('@/views' + item.url + '/index.vue'))
+      console.log(
+        'require().default',
+        require('@/views' + item.url + '/index.vue').default
+      )
       router.addRoute('main', {
         path: item.url,
         name: item.name,
-        component: _import(item.url)
+        component: require('@/views' + item.url + '/index.vue').default
       })
     } else {
       addAsyncRouter(item.children)
