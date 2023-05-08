@@ -1,5 +1,5 @@
 <template>
-  <div ref="nGridRef" class="n-grid">
+  <div ref="nGridRef">
     <slot></slot>
   </div>
 </template>

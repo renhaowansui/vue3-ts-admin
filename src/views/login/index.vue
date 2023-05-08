@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-grid x-gap="12" :cols="3">
+    <n-grid x-gap="12" :cols="4">
       <n-gi>
         <div class="gray">1</div>
       </n-gi>
