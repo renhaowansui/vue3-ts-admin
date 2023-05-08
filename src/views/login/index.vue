@@ -16,6 +16,18 @@
       <n-gi>
         <div class="gray">5</div>
       </n-gi>
+      <n-gi>
+        <div class="gray">6</div>
+      </n-gi>
+      <n-gi>
+        <div class="gray">7</div>
+      </n-gi>
+      <n-gi>
+        <div class="gray">8</div>
+      </n-gi>
+      <n-gi>
+        <div class="gray">9</div>
+      </n-gi>
     </n-grid>
   </div>
   <div class="login">
