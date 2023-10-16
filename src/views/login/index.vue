@@ -1,35 +1,4 @@
 <template>
-  <div>
-    <n-grid x-gap="12" :cols="4">
-      <n-gi>
-        <div class="gray">1</div>
-      </n-gi>
-      <n-gi>
-        <div class="gray">2</div>
-      </n-gi>
-      <n-gi>
-        <div class="gray">3</div>
-      </n-gi>
-      <n-gi>
-        <div class="gray">4</div>
-      </n-gi>
-      <n-gi>
-        <div class="gray">5</div>
-      </n-gi>
-      <n-gi>
-        <div class="gray">6</div>
-      </n-gi>
-      <n-gi>
-        <div class="gray">7</div>
-      </n-gi>
-      <n-gi>
-        <div class="gray">8</div>
-      </n-gi>
-      <n-gi>
-        <div class="gray">9</div>
-      </n-gi>
-    </n-grid>
-  </div>
   <div class="login">
     <div class="login-pane">
       <h1>后台管理系统</h1>
@@ -127,9 +96,5 @@ export default defineComponent({
       height: 40px;
     }
   }
-}
-.gray {
-  height: 200px !important;
-  background: gray !important;
 }
 </style>
